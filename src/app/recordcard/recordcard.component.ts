@@ -12,9 +12,24 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 export class RecordcardComponent {
   records: FirebaseListObservable<any>;
+  total: number;
  
   constructor(af: AngularFire) {
-    this.records = af.database.list('/records');
+    // Tried this first. Didn't work because records needed to be a FirebaseListObservable;
+    // af.database.list('/records').subscribe( records => {
+    //   this.records = records;
+    //   this.total = records.reduce( ( pv, cr ) => pv + parseInt( cr.pointsEarned ), 0 );
+    // } );
+
+    // Set records as you were.
+    this.records = af.database.list( "/records" );
+
+    // Subscribe to the records observable to recieve an array of records
+    // Sum the pointsEarned on your array of records.
+    // you might want to change wherever points are input to be <input type="number" />
+    this.records.subscribe( records => {
+      this.total = records.reduce( ( pv, cr ) => pv + parseInt( cr.pointsEarned ), 0 );
+    } );
 
     // console.log( this.records instanceof FirebaseListObservable );
     // console.log( JSON.stringify( this.records, null, 2 ) );
