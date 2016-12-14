@@ -1,0 +1,69 @@
+<h2>Program Record Card</h2>
+<p>Blah blah, some explanatory text here...</p>
+
+<form class="form-inline">
+  <div class="form-group">
+    <label for="date">Date</label>
+    <input type="text" class="form-control" name="date" size="12" placeholder="07-Feb-2016" #date>
+  </div>
+  <div class="form-group">
+    <label for="activityCode">Activity Code</label>
+    <select class="form-control" name="activityCode" #activityCode>
+      <option value="" disabled selected>Select your activity</option>
+      <option>A - Attendance</option>
+      <option>F - Fitness</option>
+      <option>BD - Blood Donation</option>
+      <option>ER - Environmental Responsibility</option>
+      <option>PD - Personal Development</option>
+      <option>V - Volunteer Activities</option>
+      <option>QS1 - Quit Smoking (1 Month)</option>
+      <option>QS3 - Quit Smoking (2 Months)</option>
+      <option>QS6 - Quit Smoking (6 Months)</option>
+      <option>QS12 - Quit Smoking (12 Months)</option>
+      <option>WL - Weight Loss (Initial - 10 Pounds)</option>
+      <option>WL6 - Weight Loss (Maintained 6 Months)</option>
+      <option>WL12 - Weight Loss (Maintained 12 Months)</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="pointsEarned">Points Earned</label>
+    <input type="text" class="form-control" name="pointsEarned" #pointsEarned>
+  </div>
+  <div class="form-group">
+    <label for="extraNotes">Notes</label>
+    <input type="text" class="form-control" name="extraNotes" maxlength="55" #extraNotes>
+  </div>
+  <button type="submit" class="btn btn-success" (click)="addRecord(date.value, activityCode.value, pointsEarned.value, extraNotes.value)">Add</button>
+</form>
+
+
+
+<h3>Current Entries</h3>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Activity Code</th>
+      <th>Points Earned</th>
+      <th>Extra Notes</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let record of records | async">
+      <td>{{ record.date }}</td>
+      <td>{{ record.activityCode }}</td>
+      <td>{{ record.pointsEarned }}</td>
+      <td>{{ record.extraNotes }}</td>
+      <td><button class="btn btn-info btn-xs">Edit</button> <button class="btn btn-danger btn-xs" (click)="deleteRecord(record.$key)">Delete</button></td>
+    </tr>
+    <tr class="info">
+      <th>&nbsp;</th>
+      <th>Total Points</th>
+      <th>{{ 10 + 2 }}</th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+    </tr>
+  </tbody>
+</table>
